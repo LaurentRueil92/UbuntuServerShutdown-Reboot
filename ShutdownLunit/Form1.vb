@@ -7,9 +7,10 @@
 '     lunit root adm ...
 
 ' reste à faire
-' ferma la fenetre à la fin
-' ligne de commande pour démarrage Sutdwon ou reboot
+' fait : fermer la fenetre à la fin (mode avec argument uniquement
+' fait : ligne de commande pour démarrage Sutdwon ou reboot
 ' fait : crypter le mot de passe
+' vérifier avec Ubuntu
 
 Public Class Form1
     Dim bDoublon As Boolean = False
@@ -28,21 +29,34 @@ Public Class Form1
     Const regPath As String = "PathPuTTY"
     Const cmdTitleWindow As String = "Please Wait during sending the command !"
     Dim bSelectTxtBox As Boolean = False
+    Dim bSilentMode As Boolean = False
 
     Private Sub ButtonShutdown_Click(sender As Object, e As EventArgs) Handles ButtonShutdown.Click
+        StartShutdown()
+    End Sub
+    Sub StartShutdown()
         Me.LabelPuTTYCommand.Text = pLinkExe + " -ssh " + Me.TextBoxUser.Text + "@" + Me.txtIP.Text + PuttyOptions + " -pw " + Me.TextBoxPwd.Text + " " + Chr(34) + ShutdownCommand + Chr(34)
-        Clipboard.SetText(Me.LabelPuTTYCommand.Text)
-        RunCMD(Me.LabelPuTTYCommand.Text, Me.TextBoxFolderPuTTY.Text, True, True, Me.CheckBoxKeepOpened.Checked)
+        RunCMD(Me.LabelPuTTYCommand.Text, Me.TextBoxFolderPuTTY.Text, False, False, Me.CheckBoxKeepOpened.Checked)
+        If bSilentMode = True Then
+            Me.Close()
+        Else
+            Clipboard.SetText(Me.LabelPuTTYCommand.Text)
+        End If
     End Sub
-
     Private Sub ButtonReboot_Click(sender As Object, e As EventArgs) Handles ButtonReboot.Click
-        Me.LabelPuTTYCommand.Text = pLinkExe +
-        " -ssh " + Me.TextBoxUser.Text + "@" + Me.txtIP.Text + PuttyOptions +
-        " -pw " + Me.TextBoxPwd.Text + " " + Chr(34) + RebootCommand + Chr(34)
-        Clipboard.SetText(Me.LabelPuTTYCommand.Text)
-        RunCMD(Me.LabelPuTTYCommand.Text, Me.TextBoxFolderPuTTY.Text, True, True, Me.CheckBoxKeepOpened.Checked)
+        StartReboot()
     End Sub
-
+    Sub StartReboot()
+        Me.LabelPuTTYCommand.Text = pLinkExe +
+            " -ssh " + Me.TextBoxUser.Text + "@" + Me.txtIP.Text + PuttyOptions +
+            " -pw " + Me.TextBoxPwd.Text + " " + Chr(34) + RebootCommand + Chr(34)
+        RunCMD(Me.LabelPuTTYCommand.Text, Me.TextBoxFolderPuTTY.Text, True, True, Me.CheckBoxKeepOpened.Checked)
+        If bSilentMode = True Then
+            Me.Close()
+        Else
+            Clipboard.SetText(Me.LabelPuTTYCommand.Text)
+        End If
+    End Sub
     <DllImport("user32.dll", SetLastError:=True, CharSet:=CharSet.Auto)>
     Public Shared Function SetWindowText(hWnd As IntPtr, text As String) As Integer
     End Function
@@ -63,8 +77,13 @@ Public Class Form1
         p.StartInfo = pi
         p.Start()
         Threading.Thread.Sleep(150)
-        SetWindowText(p.MainWindowHandle, cmdTitleWindow)
-        If WaitForProcessComplete Then Do Until p.HasExited : Loop
+        Try ' pour éviter erreur si l'on n'affiche pas la fenêtre
+            SetWindowText(p.MainWindowHandle, cmdTitleWindow)
+            If WaitForProcessComplete Then Do Until p.HasExited : Loop
+        Catch ex As Exception
+
+        End Try
+
     End Sub
     Private Sub txtIP_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtIP.KeyPress
         'If Char.IsDigit(e.KeyChar) Or e.KeyChar = "." Or Asc(e.KeyChar) = Keys.Delete Or
@@ -159,17 +178,19 @@ Public Class Form1
             End If
         End If
         If str.TextLength = 3 Then
-            Select Case pos
-                Case 0
-                    Me.txtIP2.SelectAll()
-                    Me.txtIP2.Focus()
-                Case 1
-                    Me.txtIP3.SelectAll()
-                    Me.txtIP3.Focus()
-                Case 2
-                    Me.txtIP4.SelectAll()
-                    Me.txtIP4.Focus()
-            End Select
+            If bSelectTxtBox = False Then   ' uniquement si l'on édite pas une textbox
+                Select Case pos
+                    Case 0
+                        Me.txtIP2.SelectAll()
+                        Me.txtIP2.Focus()
+                    Case 1
+                        Me.txtIP3.SelectAll()
+                        Me.txtIP3.Focus()
+                    Case 2
+                        Me.txtIP4.SelectAll()
+                        Me.txtIP4.Focus()
+                End Select
+            End If
         End If
     End Sub
     Sub isVide(txt As TextBox)
@@ -244,6 +265,19 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitApp()
+        Dim CommandLineArgs As System.Collections.ObjectModel.ReadOnlyCollection(Of String) = My.Application.CommandLineArgs
+        If CommandLineArgs.Count > 0 Then
+            ' il y a un argument
+            bSilentMode = True
+            Select Case UCase(CommandLineArgs(0))
+                Case "SHUTDOWN"
+                    Debug.Print("Shutdown")
+                    StartShutdown()
+                Case "REBOOT"
+                    Debug.Print("Reboot")
+                    StartReboot()
+            End Select
+        End If
     End Sub
     Sub InitApp()
         Dim tmp As String
@@ -284,7 +318,8 @@ Public Class Form1
         If tmp = "" Then
             Me.CheckBoxKeepOpened.Checked = True
             SaveSetting(regApp, regConfig, regKeepOpened, Me.CheckBoxKeepOpened.Checked)
-
+        Else
+            Me.CheckBoxKeepOpened.Checked = tmp
         End If
     End Sub
 
@@ -335,5 +370,11 @@ Public Class Form1
     End Sub
     Private Sub TextBoxFolderPuTTY_MouseLeave(sender As Object, e As EventArgs) Handles TextBoxFolderPuTTY.MouseLeave
         bSelectTxtBox = False ' gère l'event IP
+    End Sub
+    Private Sub CheckBoxKeepOpened_MouseLeave(sender As Object, e As EventArgs) Handles CheckBoxKeepOpened.MouseLeave
+        bSelectTxtBox = False ' gère l'event IP
+    End Sub
+    Private Sub CheckBoxKeepOpened_MouseMove(sender As Object, e As MouseEventArgs) Handles CheckBoxKeepOpened.MouseMove
+        bSelectTxtBox = True ' gère l'event IP
     End Sub
 End Class
