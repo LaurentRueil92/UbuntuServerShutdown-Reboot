@@ -287,7 +287,7 @@ Public Class Form1
     End Sub
 
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
-        MsgBox("Remote Shutdown for Lunit" & vbCrLf & vbCrLf & "Laurent MOLINA - v1.0 - 2022", vbOKOnly, "About ...")
+        MsgBox("Remote Shutdown/reboot for Lunit MG" & vbCrLf & vbCrLf & "Laurent MOLINA - v1.0 - GIT  - 2022", vbOKOnly, "About ...")
     End Sub
 
     Private Sub QuitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles QuitToolStripMenuItem.Click
