@@ -253,7 +253,7 @@ Partial Class Form1
         'SaveSettignsToolStripMenuItem
         '
         Me.SaveSettignsToolStripMenuItem.Name = "SaveSettignsToolStripMenuItem"
-        Me.SaveSettignsToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
+        Me.SaveSettignsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.SaveSettignsToolStripMenuItem.Text = "Save Settigns"
         '
         'ButtonReboot

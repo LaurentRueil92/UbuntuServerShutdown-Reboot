@@ -9,7 +9,7 @@
 ' reste à faire
 ' ferma la fenetre à la fin
 ' ligne de commande pour démarrage Sutdwon ou reboot
-' crypter le mot de passe
+' fait : crypter le mot de passe
 
 Public Class Form1
     Dim bDoublon As Boolean = False
@@ -27,6 +27,8 @@ Public Class Form1
     Const regPwd As String = "Pwd"
     Const regPath As String = "PathPuTTY"
     Const cmdTitleWindow As String = "Please Wait during sending the command !"
+    Dim bSelectTxtBox As Boolean = False
+
     Private Sub ButtonShutdown_Click(sender As Object, e As EventArgs) Handles ButtonShutdown.Click
         Me.LabelPuTTYCommand.Text = pLinkExe + " -ssh " + Me.TextBoxUser.Text + "@" + Me.txtIP.Text + PuttyOptions + " -pw " + Me.TextBoxPwd.Text + " " + Chr(34) + ShutdownCommand + Chr(34)
         Clipboard.SetText(Me.LabelPuTTYCommand.Text)
@@ -266,10 +268,10 @@ Public Class Form1
         End If
 
         ' password
-        Me.TextBoxPwd.Text = GetSetting(regApp, regConfig, regPwd, "")
+        Me.TextBoxPwd.Text = decode(GetSetting(regApp, regConfig, regPwd, ""))
         If Me.TextBoxPwd.Text = "" Then
             Me.TextBoxPwd.Text = "fcr-iip"
-            SaveSetting(regApp, regConfig, regPwd, Me.TextBoxPwd.Text)
+            SaveSetting(regApp, regConfig, regPwd, code(Me.TextBoxPwd.Text))
         End If
 
         ' path
@@ -296,11 +298,42 @@ Public Class Form1
 
     Private Sub SaveSettignsToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SaveSettignsToolStripMenuItem.Click
         SaveSetting(regApp, regConfig, regUser, Me.TextBoxUser.Text)
-        SaveSetting(regApp, regConfig, regPwd, Me.TextBoxPwd.Text)
+        SaveSetting(regApp, regConfig, regPwd, code(Me.TextBoxPwd.Text))
         SaveSetting(regApp, regConfig, regPath, Me.TextBoxFolderPuTTY.Text)
         SaveSetting(regApp, regConfig, regKeepOpened, Me.CheckBoxKeepOpened.Checked)
         SaveSetting(regApp, regConfig, regIP, Me.txtIP.Text)
     End Sub
 
+    Function code(toEncode As String) As String
+        code = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(toEncode))
+    End Function
+    Function decode(toDecode As String) As String
+        Try
+            decode = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(toDecode.ToString))
 
+        Catch ex As Exception
+
+        End Try
+    End Function
+
+
+    ' évite le focus sur le 3ème texte de l'IP
+    Private Sub TextBoxUser_MouseMove(sender As Object, e As MouseEventArgs) Handles TextBoxUser.MouseMove
+        bSelectTxtBox = True    ' gère l'event IP
+    End Sub
+    Private Sub TextBoxUser_MouseLeave(sender As Object, e As EventArgs) Handles TextBoxUser.MouseLeave
+        bSelectTxtBox = False ' gère l'event IP
+    End Sub
+    Private Sub TextBoxPwd_MouseEnter(sender As Object, e As EventArgs) Handles TextBoxPwd.MouseEnter
+        bSelectTxtBox = True ' gère l'event IP
+    End Sub
+    Private Sub TextBoxPwd_MouseLeave(sender As Object, e As EventArgs) Handles TextBoxPwd.MouseLeave
+        bSelectTxtBox = False ' gère l'event IP
+    End Sub
+    Private Sub TextBoxFolderPuTTY_MouseEnter(sender As Object, e As EventArgs) Handles TextBoxFolderPuTTY.MouseEnter
+        bSelectTxtBox = True ' gère l'event IP
+    End Sub
+    Private Sub TextBoxFolderPuTTY_MouseLeave(sender As Object, e As EventArgs) Handles TextBoxFolderPuTTY.MouseLeave
+        bSelectTxtBox = False ' gère l'event IP
+    End Sub
 End Class
