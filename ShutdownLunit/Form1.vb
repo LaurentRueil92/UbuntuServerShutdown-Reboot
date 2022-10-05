@@ -5,12 +5,15 @@
 '   Ajouter: lunit ALL=NOPASSWD: /sbin/shutdown, /sbin/reboot
 ' verifier : groups lunit
 '     lunit root adm ...
+' tester une remière fois la connexion ssh pour valider la clé SHA
 
 ' reste à faire
 ' fait : fermer la fenetre à la fin (mode avec argument uniquement
 ' fait : ligne de commande pour démarrage Sutdwon ou reboot
 ' fait : crypter le mot de passe
-' vérifier avec Ubuntu
+' fait : vérifier avec Ubuntu
+' si impossible de compiler:
+'  effacer dossier obj (L:\Laurent\Dev\UbuntuShutdown\UbuntuServerShutdown-Reboot\ShutdownLunit)
 
 Public Class Form1
     Dim bDoublon As Boolean = False
@@ -324,7 +327,7 @@ Public Class Form1
     End Sub
 
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
-        MsgBox("Remote Shutdown/reboot for Lunit MG" & vbCrLf & vbCrLf & "Laurent MOLINA - v1.0 - GIT  - 2022", vbOKOnly, "About ...")
+        MsgBox("Remote Shutdown/Reboot for Lunit MG" & vbCrLf & vbCrLf & "Laurent MOLINA - v1.0 - GITHUB  - 2022", vbOKOnly, "About ...")
     End Sub
 
     Private Sub QuitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles QuitToolStripMenuItem.Click
@@ -343,6 +346,7 @@ Public Class Form1
         code = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(toEncode))
     End Function
     Function decode(toDecode As String) As String
+        decode = ""
         Try
             decode = System.Text.Encoding.UTF8.GetString(Convert.FromBase64String(toDecode.ToString))
 
