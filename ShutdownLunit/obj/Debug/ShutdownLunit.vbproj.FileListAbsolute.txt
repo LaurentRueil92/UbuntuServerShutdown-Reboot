@@ -35,6 +35,7 @@ L:\Laurent\Dev\UbuntuShutdown\UbuntuServerShutdown-Reboot\ShutdownLunit\obj\Debu
 L:\Laurent\Dev\UbuntuShutdown\UbuntuServerShutdown-Reboot\ShutdownLunit\obj\Debug\ShutdownLunit.exe
 L:\Laurent\Dev\UbuntuShutdown\UbuntuServerShutdown-Reboot\ShutdownLunit\obj\Debug\ShutdownLunit.xml
 L:\Laurent\Dev\UbuntuShutdown\UbuntuServerShutdown-Reboot\ShutdownLunit\obj\Debug\ShutdownLunit.pdb
+<<<<<<< HEAD
 \\Mac\Home\Documents\GIT\ShutdownLunit\ShutdownLunit\bin\Debug\ShutdownLunit.exe.config
 \\Mac\Home\Documents\GIT\ShutdownLunit\ShutdownLunit\bin\Debug\ShutdownLunit.exe
 \\Mac\Home\Documents\GIT\ShutdownLunit\ShutdownLunit\bin\Debug\ShutdownLunit.pdb
@@ -48,3 +49,5 @@ L:\Laurent\Dev\UbuntuShutdown\UbuntuServerShutdown-Reboot\ShutdownLunit\obj\Debu
 \\Mac\Home\Documents\GIT\ShutdownLunit\ShutdownLunit\obj\Debug\ShutdownLunit.exe
 \\Mac\Home\Documents\GIT\ShutdownLunit\ShutdownLunit\obj\Debug\ShutdownLunit.xml
 \\Mac\Home\Documents\GIT\ShutdownLunit\ShutdownLunit\obj\Debug\ShutdownLunit.pdb
+=======
+>>>>>>> ae3f23a (pour test avec VMAjout MG dans Aboutajout shutdown rebootTest modif msgbox About avec test)
