@@ -14,7 +14,9 @@
 ' fait : vérifier avec Ubuntu
 ' si impossible de compiler:
 '  effacer dossier obj (L:\Laurent\Dev\UbuntuShutdown\UbuntuServerShutdown-Reboot\ShutdownLunit)
-
+' v1.1
+' fait : debug mode configurable
+' fait : raccourcis sur le bureau 
 Public Class Form1
     Dim bDoublon As Boolean = False
     Const PuTTYFolderDefault As String = "C:\Program Files\PuTTY"
@@ -33,6 +35,7 @@ Public Class Form1
     Const cmdTitleWindow As String = "Please Wait during sending the command !"
     Dim bSelectTxtBox As Boolean = False
     Dim bSilentMode As Boolean = False
+    Dim bDebugMode As Boolean = False
 
     Private Sub ButtonShutdown_Click(sender As Object, e As EventArgs) Handles ButtonShutdown.Click
         StartShutdown()
@@ -43,7 +46,7 @@ Public Class Form1
         If bSilentMode = True Then
             Me.Close()
         Else
-            Clipboard.SetText(Me.LabelPuTTYCommand.Text)
+            If bDebugMode = True Then Clipboard.SetText(Me.LabelPuTTYCommand.Text)
         End If
     End Sub
     Private Sub ButtonReboot_Click(sender As Object, e As EventArgs) Handles ButtonReboot.Click
@@ -53,11 +56,16 @@ Public Class Form1
         Me.LabelPuTTYCommand.Text = pLinkExe +
             " -ssh " + Me.TextBoxUser.Text + "@" + Me.txtIP.Text + PuttyOptions +
             " -pw " + Me.TextBoxPwd.Text + " " + Chr(34) + RebootCommand + Chr(34)
-        RunCMD(Me.LabelPuTTYCommand.Text, Me.TextBoxFolderPuTTY.Text, True, True, Me.CheckBoxKeepOpened.Checked)
-        If bSilentMode = True Then
-            Me.Close()
+        If Me.CheckBoxKeepOpened.Enabled = True Then
+            RunCMD(Me.LabelPuTTYCommand.Text, Me.TextBoxFolderPuTTY.Text, True, True, Me.CheckBoxKeepOpened.Checked)
         Else
-            Clipboard.SetText(Me.LabelPuTTYCommand.Text)
+            RunCMD(Me.LabelPuTTYCommand.Text, Me.TextBoxFolderPuTTY.Text, False, False, Me.CheckBoxKeepOpened.Checked)
+        End If
+
+        If bSilentMode = True Then
+                Me.Close()
+            Else
+                If bDebugMode = True Then Clipboard.SetText(Me.LabelPuTTYCommand.Text)
         End If
     End Sub
     <DllImport("user32.dll", SetLastError:=True, CharSet:=CharSet.Auto)>
@@ -268,6 +276,7 @@ Public Class Form1
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         InitApp()
+        Me.CheckBoxKeepOpened.Visible = False
         Dim CommandLineArgs As System.Collections.ObjectModel.ReadOnlyCollection(Of String) = My.Application.CommandLineArgs
         If CommandLineArgs.Count > 0 Then
             ' il y a un argument
@@ -275,10 +284,16 @@ Public Class Form1
             Select Case UCase(CommandLineArgs(0))
                 Case "SHUTDOWN"
                     Debug.Print("Shutdown")
+                    Me.CheckBoxKeepOpened.Enabled = False
                     StartShutdown()
                 Case "REBOOT"
                     Debug.Print("Reboot")
+                    Me.CheckBoxKeepOpened.Enabled = False
                     StartReboot()
+                Case "DEBUG"
+                    Debug.Print("Debug")
+                    bDebugMode = True
+                    Me.CheckBoxKeepOpened.Visible = True
             End Select
         End If
     End Sub
@@ -327,7 +342,7 @@ Public Class Form1
     End Sub
 
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
-        MsgBox("Remote Shutdown/Reboot for Lunit MG" & vbCrLf & vbCrLf & "Laurent MOLINA - v1.0 - GITHUB  - 2022", vbOKOnly, "About ...")
+        MsgBox("Remote Shutdown/Reboot for Lunit MG" & vbCrLf & vbCrLf & "Laurent MOLINA - v1.1 - GITHUB  - 2022", vbOKOnly, "About ...")
     End Sub
 
     Private Sub QuitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles QuitToolStripMenuItem.Click
@@ -380,5 +395,37 @@ Public Class Form1
     End Sub
     Private Sub CheckBoxKeepOpened_MouseMove(sender As Object, e As MouseEventArgs) Handles CheckBoxKeepOpened.MouseMove
         bSelectTxtBox = True ' gère l'event IP
+    End Sub
+
+    Private Sub CréerRaccourcisShutdownToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerRaccourcisShutdownToolStripMenuItem.Click
+        CreateShortCut(ShutdownCommand)
+    End Sub
+
+    Private Sub CréerRaccourcisRebootSurLeBureauToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CréerRaccourcisRebootSurLeBureauToolStripMenuItem.Click
+        CreateShortCut(RebootCommand)
+    End Sub
+    Sub CreateShortCut(commandLinux As String)
+        Dim objShell, strDesktopPath, objLink
+        objShell = CreateObject("WScript.Shell")
+        strDesktopPath = objShell.SpecialFolders("Desktop")
+
+        Dim StartupDir As String = "C:\Users\" + System.Environment.UserName.ToString + "\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\"
+
+        ' Raccourcis dans le dossier de démarrage
+        If commandLinux.Contains("shutdown") Then
+            objLink = objShell.CreateShortcut(strDesktopPath & "\" & "Stopper LUNIT.lnk")
+            objLink.Arguments = "SHUTDOWN"
+            objLink.Description = "Arrête proprement LUNIT"
+        End If
+        If commandLinux.Contains("reboot") Then
+            objLink = objShell.CreateShortcut(strDesktopPath & "\" & "Redémarrer LUNIT.lnk")
+            objLink.Arguments = "REBOOT"
+            objLink.Description = "Redémarre LUNIT"
+        End If
+
+        objLink.TargetPath = Application.ExecutablePath
+        objLink.WindowStyle = 1
+        objLink.WorkingDirectory = Application.ExecutablePath
+        objLink.Save
     End Sub
 End Class

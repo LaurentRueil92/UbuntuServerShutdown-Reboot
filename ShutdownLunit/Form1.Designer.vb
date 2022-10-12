@@ -22,6 +22,7 @@ Partial Class Form1
     'Ne la modifiez pas à l'aide de l'éditeur de code.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.Label1 = New System.Windows.Forms.Label()
         Me.txtIP1 = New System.Windows.Forms.TextBox()
         Me.txtIP2 = New System.Windows.Forms.TextBox()
@@ -46,6 +47,9 @@ Partial Class Form1
         Me.ConfigToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveSettignsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ButtonReboot = New System.Windows.Forms.Button()
+        Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
+        Me.CréerRaccourcisShutdownToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CréerRaccourcisRebootSurLeBureauToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -181,7 +185,7 @@ Partial Class Form1
         '
         'ButtonShutdown
         '
-        Me.ButtonShutdown.Location = New System.Drawing.Point(81, 204)
+        Me.ButtonShutdown.Location = New System.Drawing.Point(81, 191)
         Me.ButtonShutdown.Name = "ButtonShutdown"
         Me.ButtonShutdown.Size = New System.Drawing.Size(75, 31)
         Me.ButtonShutdown.TabIndex = 15
@@ -203,7 +207,7 @@ Partial Class Form1
         Me.CheckBoxKeepOpened.AutoSize = True
         Me.CheckBoxKeepOpened.Checked = True
         Me.CheckBoxKeepOpened.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBoxKeepOpened.Location = New System.Drawing.Point(84, 168)
+        Me.CheckBoxKeepOpened.Location = New System.Drawing.Point(84, 163)
         Me.CheckBoxKeepOpened.Name = "CheckBoxKeepOpened"
         Me.CheckBoxKeepOpened.Size = New System.Drawing.Size(205, 17)
         Me.CheckBoxKeepOpened.TabIndex = 17
@@ -245,7 +249,7 @@ Partial Class Form1
         '
         'ConfigToolStripMenuItem
         '
-        Me.ConfigToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveSettignsToolStripMenuItem})
+        Me.ConfigToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.SaveSettignsToolStripMenuItem, Me.ToolStripMenuItem2, Me.CréerRaccourcisShutdownToolStripMenuItem, Me.CréerRaccourcisRebootSurLeBureauToolStripMenuItem})
         Me.ConfigToolStripMenuItem.Name = "ConfigToolStripMenuItem"
         Me.ConfigToolStripMenuItem.Size = New System.Drawing.Size(55, 20)
         Me.ConfigToolStripMenuItem.Text = "Config"
@@ -253,23 +257,40 @@ Partial Class Form1
         'SaveSettignsToolStripMenuItem
         '
         Me.SaveSettignsToolStripMenuItem.Name = "SaveSettignsToolStripMenuItem"
-        Me.SaveSettignsToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.SaveSettignsToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
         Me.SaveSettignsToolStripMenuItem.Text = "Save Settigns"
         '
         'ButtonReboot
         '
-        Me.ButtonReboot.Location = New System.Drawing.Point(218, 204)
+        Me.ButtonReboot.Location = New System.Drawing.Point(296, 191)
         Me.ButtonReboot.Name = "ButtonReboot"
         Me.ButtonReboot.Size = New System.Drawing.Size(75, 31)
         Me.ButtonReboot.TabIndex = 19
         Me.ButtonReboot.Text = "Reboot"
         Me.ButtonReboot.UseVisualStyleBackColor = True
         '
+        'ToolStripMenuItem2
+        '
+        Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(287, 6)
+        '
+        'CréerRaccourcisShutdownToolStripMenuItem
+        '
+        Me.CréerRaccourcisShutdownToolStripMenuItem.Name = "CréerRaccourcisShutdownToolStripMenuItem"
+        Me.CréerRaccourcisShutdownToolStripMenuItem.Size = New System.Drawing.Size(285, 22)
+        Me.CréerRaccourcisShutdownToolStripMenuItem.Text = "Créer Raccourci Shutdown sur le Bureau"
+        '
+        'CréerRaccourcisRebootSurLeBureauToolStripMenuItem
+        '
+        Me.CréerRaccourcisRebootSurLeBureauToolStripMenuItem.Name = "CréerRaccourcisRebootSurLeBureauToolStripMenuItem"
+        Me.CréerRaccourcisRebootSurLeBureauToolStripMenuItem.Size = New System.Drawing.Size(285, 22)
+        Me.CréerRaccourcisRebootSurLeBureauToolStripMenuItem.Text = "Créer Raccourci Reboot sur le Bureau"
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(396, 247)
+        Me.ClientSize = New System.Drawing.Size(396, 230)
         Me.Controls.Add(Me.ButtonReboot)
         Me.Controls.Add(Me.CheckBoxKeepOpened)
         Me.Controls.Add(Me.LabelPuTTYCommand)
@@ -288,9 +309,11 @@ Partial Class Form1
         Me.Controls.Add(Me.txtIP1)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.MenuStrip1)
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
-        Me.MaximumSize = New System.Drawing.Size(412, 286)
-        Me.MinimumSize = New System.Drawing.Size(412, 286)
+        Me.MaximumSize = New System.Drawing.Size(412, 269)
+        Me.MinimumSize = New System.Drawing.Size(412, 269)
         Me.Name = "Form1"
         Me.Text = "Shutdown Lunit by L. MOLINA - 2022"
         Me.MenuStrip1.ResumeLayout(False)
@@ -324,4 +347,7 @@ Partial Class Form1
     Friend WithEvents ConfigToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents SaveSettignsToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ButtonReboot As Button
+    Friend WithEvents ToolStripMenuItem2 As ToolStripSeparator
+    Friend WithEvents CréerRaccourcisShutdownToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents CréerRaccourcisRebootSurLeBureauToolStripMenuItem As ToolStripMenuItem
 End Class
