@@ -5,7 +5,7 @@
 '   Ajouter: lunit ALL=NOPASSWD: /sbin/shutdown, /sbin/reboot
 ' verifier : groups lunit
 '     lunit root adm ...
-' tester une remière fois la connexion ssh pour valider la clé SHA
+' tester une première fois la connexion ssh pour valider la clé SHA
 
 ' reste à faire
 ' fait : fermer la fenetre à la fin (mode avec argument uniquement
@@ -17,6 +17,7 @@
 ' v1.1
 ' fait : debug mode configurable
 ' fait : raccourcis sur le bureau 
+' version sous GitHub
 Public Class Form1
     Dim bDoublon As Boolean = False
     Const PuTTYFolderDefault As String = "C:\Program Files\PuTTY"
@@ -35,7 +36,7 @@ Public Class Form1
     Const cmdTitleWindow As String = "Please Wait during sending the command !"
     Dim bSelectTxtBox As Boolean = False
     Dim bSilentMode As Boolean = False
-    Dim bDebugMode As Boolean = False
+    Dim bDebugMode As Boolean = True
 
     Private Sub ButtonShutdown_Click(sender As Object, e As EventArgs) Handles ButtonShutdown.Click
         StartShutdown()
@@ -63,9 +64,9 @@ Public Class Form1
         End If
 
         If bSilentMode = True Then
-                Me.Close()
-            Else
-                If bDebugMode = True Then Clipboard.SetText(Me.LabelPuTTYCommand.Text)
+            Me.Close()
+        Else
+            If bDebugMode = True Then Clipboard.SetText(Me.LabelPuTTYCommand.Text)
         End If
     End Sub
     <DllImport("user32.dll", SetLastError:=True, CharSet:=CharSet.Auto)>
@@ -97,11 +98,6 @@ Public Class Form1
 
     End Sub
     Private Sub txtIP_KeyPress(sender As Object, e As KeyPressEventArgs) Handles txtIP.KeyPress
-        'If Char.IsDigit(e.KeyChar) Or e.KeyChar = "." Or Asc(e.KeyChar) = Keys.Delete Or
-        '  Asc(e.KeyChar) = Keys.Right Or Asc(e.KeyChar) = Keys.Left Or Asc(e.KeyChar) = Keys.Delete Or Asc(e.KeyChar) = Keys.Back Then
-        '    Return
-        'End If
-        'e.Handled = True
         e.Handled = testChar(e.KeyChar)
     End Sub
 
@@ -163,7 +159,6 @@ Public Class Form1
         If str.Text = "" Then
             ' champs incorrect
         Else
-            'str.Text = str.Text.ToString.Replace(".", "")
             str.Text = Int(str.Text).ToString
             If pos = 0 Or pos = 3 Then  ' vérification spéciale pos 0 et 3
                 If Int(str.Text) = 0 Then
@@ -293,6 +288,7 @@ Public Class Form1
                 Case "DEBUG"
                     Debug.Print("Debug")
                     bDebugMode = True
+                    bSilentMode = False
                     Me.CheckBoxKeepOpened.Visible = True
             End Select
         End If
@@ -339,10 +335,12 @@ Public Class Form1
         Else
             Me.CheckBoxKeepOpened.Checked = tmp
         End If
+        bDebugMode = False
+
     End Sub
 
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
-        MsgBox("Remote Shutdown/Reboot for Lunit MG" & vbCrLf & vbCrLf & "Laurent MOLINA - v1.1 - GITHUB  - 2022", vbOKOnly, "About ...")
+        MsgBox("Remote Shutdown/Reboot for Lunit MG" & vbCrLf & vbCrLf & "Laurent MOLINA - v1.1.1 - GITHUB  - 2022", vbOKOnly, "About ...")
     End Sub
 
     Private Sub QuitToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles QuitToolStripMenuItem.Click
@@ -416,16 +414,21 @@ Public Class Form1
             objLink = objShell.CreateShortcut(strDesktopPath & "\" & "Stopper LUNIT.lnk")
             objLink.Arguments = "SHUTDOWN"
             objLink.Description = "Arrête proprement LUNIT"
+            objLink.TargetPath = Application.ExecutablePath
+            objLink.WindowStyle = 1
+            objLink.WorkingDirectory = Application.ExecutablePath
+            objLink.Save
         End If
         If commandLinux.Contains("reboot") Then
             objLink = objShell.CreateShortcut(strDesktopPath & "\" & "Redémarrer LUNIT.lnk")
             objLink.Arguments = "REBOOT"
             objLink.Description = "Redémarre LUNIT"
+            objLink.TargetPath = Application.ExecutablePath
+            objLink.WindowStyle = 1
+            objLink.WorkingDirectory = Application.ExecutablePath
+            objLink.Save
         End If
 
-        objLink.TargetPath = Application.ExecutablePath
-        objLink.WindowStyle = 1
-        objLink.WorkingDirectory = Application.ExecutablePath
-        objLink.Save
+
     End Sub
 End Class

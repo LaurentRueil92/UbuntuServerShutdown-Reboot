@@ -46,10 +46,10 @@ Partial Class Form1
         Me.QuitToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ConfigToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveSettignsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ButtonReboot = New System.Windows.Forms.Button()
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripSeparator()
         Me.CréerRaccourcisShutdownToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CréerRaccourcisRebootSurLeBureauToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ButtonReboot = New System.Windows.Forms.Button()
         Me.MenuStrip1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -233,18 +233,18 @@ Partial Class Form1
         'AboutToolStripMenuItem
         '
         Me.AboutToolStripMenuItem.Name = "AboutToolStripMenuItem"
-        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
+        Me.AboutToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.AboutToolStripMenuItem.Text = "About"
         '
         'ToolStripMenuItem1
         '
         Me.ToolStripMenuItem1.Name = "ToolStripMenuItem1"
-        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(104, 6)
+        Me.ToolStripMenuItem1.Size = New System.Drawing.Size(177, 6)
         '
         'QuitToolStripMenuItem
         '
         Me.QuitToolStripMenuItem.Name = "QuitToolStripMenuItem"
-        Me.QuitToolStripMenuItem.Size = New System.Drawing.Size(107, 22)
+        Me.QuitToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.QuitToolStripMenuItem.Text = "Quit"
         '
         'ConfigToolStripMenuItem
@@ -257,22 +257,13 @@ Partial Class Form1
         'SaveSettignsToolStripMenuItem
         '
         Me.SaveSettignsToolStripMenuItem.Name = "SaveSettignsToolStripMenuItem"
-        Me.SaveSettignsToolStripMenuItem.Size = New System.Drawing.Size(143, 22)
-        Me.SaveSettignsToolStripMenuItem.Text = "Save Settigns"
-        '
-        'ButtonReboot
-        '
-        Me.ButtonReboot.Location = New System.Drawing.Point(296, 191)
-        Me.ButtonReboot.Name = "ButtonReboot"
-        Me.ButtonReboot.Size = New System.Drawing.Size(75, 31)
-        Me.ButtonReboot.TabIndex = 19
-        Me.ButtonReboot.Text = "Reboot"
-        Me.ButtonReboot.UseVisualStyleBackColor = True
+        Me.SaveSettignsToolStripMenuItem.Size = New System.Drawing.Size(285, 22)
+        Me.SaveSettignsToolStripMenuItem.Text = "Save Settings"
         '
         'ToolStripMenuItem2
         '
         Me.ToolStripMenuItem2.Name = "ToolStripMenuItem2"
-        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(287, 6)
+        Me.ToolStripMenuItem2.Size = New System.Drawing.Size(282, 6)
         '
         'CréerRaccourcisShutdownToolStripMenuItem
         '
@@ -285,6 +276,15 @@ Partial Class Form1
         Me.CréerRaccourcisRebootSurLeBureauToolStripMenuItem.Name = "CréerRaccourcisRebootSurLeBureauToolStripMenuItem"
         Me.CréerRaccourcisRebootSurLeBureauToolStripMenuItem.Size = New System.Drawing.Size(285, 22)
         Me.CréerRaccourcisRebootSurLeBureauToolStripMenuItem.Text = "Créer Raccourci Reboot sur le Bureau"
+        '
+        'ButtonReboot
+        '
+        Me.ButtonReboot.Location = New System.Drawing.Point(296, 191)
+        Me.ButtonReboot.Name = "ButtonReboot"
+        Me.ButtonReboot.Size = New System.Drawing.Size(75, 31)
+        Me.ButtonReboot.TabIndex = 19
+        Me.ButtonReboot.Text = "Reboot"
+        Me.ButtonReboot.UseVisualStyleBackColor = True
         '
         'Form1
         '

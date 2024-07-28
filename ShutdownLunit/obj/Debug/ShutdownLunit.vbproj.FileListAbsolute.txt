@@ -10,3 +10,15 @@ L:\Laurent\Dev\UbuntuShutdown\UbuntuServerShutdown-Reboot\ShutdownLunit\obj\Debu
 L:\Laurent\Dev\UbuntuShutdown\UbuntuServerShutdown-Reboot\ShutdownLunit\obj\Debug\ShutdownLunit.xml
 L:\Laurent\Dev\UbuntuShutdown\UbuntuServerShutdown-Reboot\ShutdownLunit\obj\Debug\ShutdownLunit.pdb
 L:\Laurent\Dev\UbuntuShutdown\UbuntuServerShutdown-Reboot\ShutdownLunit\obj\Debug\ShutdownLunit.vbprojAssemblyReference.cache
+L:\Laurent\Dev\GIT\UbuntuServerShutdown-Reboot\ShutdownLunit\bin\Debug\ShutdownLunit.exe.config
+L:\Laurent\Dev\GIT\UbuntuServerShutdown-Reboot\ShutdownLunit\bin\Debug\ShutdownLunit.exe
+L:\Laurent\Dev\GIT\UbuntuServerShutdown-Reboot\ShutdownLunit\bin\Debug\ShutdownLunit.pdb
+L:\Laurent\Dev\GIT\UbuntuServerShutdown-Reboot\ShutdownLunit\bin\Debug\ShutdownLunit.xml
+L:\Laurent\Dev\GIT\UbuntuServerShutdown-Reboot\ShutdownLunit\obj\Debug\ShutdownLunit.vbproj.AssemblyReference.cache
+L:\Laurent\Dev\GIT\UbuntuServerShutdown-Reboot\ShutdownLunit\obj\Debug\ShutdownLunit.Form1.resources
+L:\Laurent\Dev\GIT\UbuntuServerShutdown-Reboot\ShutdownLunit\obj\Debug\ShutdownLunit.Resources.resources
+L:\Laurent\Dev\GIT\UbuntuServerShutdown-Reboot\ShutdownLunit\obj\Debug\ShutdownLunit.vbproj.GenerateResource.cache
+L:\Laurent\Dev\GIT\UbuntuServerShutdown-Reboot\ShutdownLunit\obj\Debug\ShutdownLunit.vbproj.CoreCompileInputs.cache
+L:\Laurent\Dev\GIT\UbuntuServerShutdown-Reboot\ShutdownLunit\obj\Debug\ShutdownLunit.exe
+L:\Laurent\Dev\GIT\UbuntuServerShutdown-Reboot\ShutdownLunit\obj\Debug\ShutdownLunit.xml
+L:\Laurent\Dev\GIT\UbuntuServerShutdown-Reboot\ShutdownLunit\obj\Debug\ShutdownLunit.pdb
